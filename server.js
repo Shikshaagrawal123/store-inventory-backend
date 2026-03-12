@@ -1,9 +1,11 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 
 const connectDB = require("./config/db");
 const productRoutes = require("./routes/productRoutes");
+const errorHandler = require("./middleware/errorMiddleware");
 
 dotenv.config();
 
@@ -15,6 +17,11 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api", productRoutes);
+
+
+// error middleware (always last)
+app.use(errorHandler);
+
 
 const PORT = process.env.PORT || 5000;
 
